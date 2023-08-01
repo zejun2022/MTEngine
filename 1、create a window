@@ -1,0 +1,42 @@
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
+using namespace std;
+
+// 初始化GLFW库
+void init(GLFWwindow* window) {}
+
+void display(GLFWwindow* window, double currentTime) {
+    glClearColor(1, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+}
+int main(void)
+{
+    if (!glfwInit()) { exit(EXIT_FAILURE); } // 初始化glfw
+
+    // 指定计算机必须与OpenGL4.3兼容
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+    GLFWwindow* window = glfwCreateWindow(600, 600, "new window", NULL, NULL); // 创建窗口
+    glfwMakeContextCurrent(window); // 关联上下文
+    
+    if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); } // 初始化glew
+    glfwSwapInterval(1); // 开启垂直同步
+
+    init(window);
+
+    while (!glfwWindowShouldClose(window)) {
+        display(window, glfwGetTime());
+        glfwSwapBuffers(window); // 开启垂直同步
+        glfwPollEvents(); // 处理窗口事件
+
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
+}
